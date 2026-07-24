@@ -22,6 +22,7 @@
  * ============================================================= */
 
 const hisData = [
+  // ========== 原始人物（三国→民国） ==========
   {
     id: "zhuge", name: "诸葛亮", birthYear: 181, deathYear: 234, dynasty: "三国",
     class: "文人", classColor: "#1685A9",
@@ -90,14 +91,14 @@ const hisData = [
     class: "文人", classColor: "#1685A9",
     quote: "巴东三峡巫峡长，猿鸣三声泪沾裳。", quoteSource: "《水经注·江水》",
     isKeyFigure: false,
-    relationships: { previous: { id: "huiyuan", type: "其他", description: "继南北朝佛教文化之后，以地理志记录华夏山河。" }, next: { id: "wangwei", type: "其他", description: "郦道元的山水之笔，至唐代王维而化为诗中有画、画中有诗的意境。" } }
+    relationships: { previous: { id: "zuchongzhi", type: "其他", description: "祖冲之算经，郦道元注水经，南北朝科学并兴。" }, next: { id: "taohongjing", type: "其他", description: "南北朝科学、隐逸相继。" } }
   },
   {
     id: "wangwei", name: "王维", birthYear: 701, deathYear: 761, dynasty: "唐",
     class: "文人", classColor: "#1685A9",
     quote: "空山不见人，但闻人语响。返景入深林，复照青苔上。", quoteSource: "《鹿柴》",
     isKeyFigure: true,
-    relationships: { previous: { id: "lidaoyuan", type: "其他", description: "承南北朝山水传统，开盛唐山水田园诗派。" }, next: { id: "libai", type: "同僚", description: "与李白并称盛唐双璧，一个诗佛一个诗仙，交相辉映。" } }
+    relationships: { previous: { id: "taohongjing", type: "其他", description: "承南北朝山水传统，开盛唐山水田园诗派。" }, next: { id: "libai", type: "同僚", description: "与李白并称盛唐双璧，一个诗佛一个诗仙，交相辉映。" } }
   },
   {
     id: "libai", name: "李白", birthYear: 701, deathYear: 762, dynasty: "唐",
@@ -143,7 +144,7 @@ const hisData = [
   },
   {
     id: "wentianxiang", name: "文天祥", birthYear: 1236, deathYear: 1283, dynasty: "南宋",
-    class: "武将", classColor: "#065279",
+    class: "武将", classColor: "#000000",
     quote: "人生自古谁无死，留取丹心照汗青。", quoteSource: "《过零丁洋》",
     isKeyFigure: false,
     relationships: { previous: { id: "zhuxi", type: "其他", description: "以朱熹理学为精神根基，以死明志，成千古忠义之范。" }, next: { id: "wangyangming", type: "其他", description: "文天祥之后，明代王阳明承宋儒之学，创心学一派。" } }
@@ -196,6 +197,378 @@ const hisData = [
     quote: "横眉冷对千夫指，俯首甘为孺子牛。", quoteSource: "《自嘲》",
     isKeyFigure: true,
     relationships: { previous: { id: "caoxueqin", type: "其他", description: "曹雪芹以小说写尽封建末世，鲁迅以杂文唤醒沉睡国民。" } }
+  },
+  // ========== 春秋（前770-前476） ==========
+  {
+    id: "kongzi", name: "孔子", birthYear: -551, deathYear: -479, dynasty: "春秋",
+    class: "文人", classColor: "#1685A9",
+    quote: "学而时习之，不亦说乎？", quoteSource: "《论语》",
+    isKeyFigure: true,
+    relationships: { next: { id: "laozi", type: "亲友", description: "孔子问礼于老子，儒道两家思想由此分途并立。" } }
+  },
+  {
+    id: "laozi", name: "老子", birthYear: -571, deathYear: -471, dynasty: "春秋",
+    class: "文人", classColor: "#1685A9",
+    quote: "道可道，非常道；名可名，非常名。", quoteSource: "《道德经》",
+    isKeyFigure: true,
+    relationships: { previous: { id: "kongzi", type: "亲友", description: "孔子问礼，老子以道德之旨相授。" }, next: { id: "sunzi", type: "其他", description: "道家自然无为思想，下启孙子兵家之学。" } }
+  },
+  {
+    id: "sunzi", name: "孙子", birthYear: -545, deathYear: -470, dynasty: "春秋",
+    class: "武将", classColor: "#000000",
+    quote: "知己知彼，百战不殆。", quoteSource: "《孙子兵法》",
+    isKeyFigure: true,
+    relationships: { previous: { id: "laozi", type: "其他", description: "道家辩证思维启迪兵家谋略。" }, next: { id: "mozi", type: "对手", description: "兵家尚战，墨家非攻，思想对立。" } }
+  },
+  {
+    id: "mozi", name: "墨子", birthYear: -470, deathYear: -391, dynasty: "春秋",
+    class: "文人", classColor: "#1685A9",
+    quote: "兼相爱，交相利。", quoteSource: "《墨子》",
+    isKeyFigure: true,
+    relationships: { previous: { id: "sunzi", type: "对手", description: "非攻反战，与兵家思想相对。" }, next: { id: "mengzi", type: "其他", description: "墨家兼爱思想对孟子仁政有所启发。" } }
+  },
+  // ========== 战国（前475-前221） ==========
+  {
+    id: "mengzi", name: "孟子", birthYear: -372, deathYear: -289, dynasty: "战国",
+    class: "文人", classColor: "#1685A9",
+    quote: "民为贵，社稷次之，君为轻。", quoteSource: "《孟子》",
+    isKeyFigure: true,
+    relationships: { previous: { id: "mozi", type: "其他", description: "承孔子之教，发扬仁义。" }, next: { id: "quyuan", type: "其他", description: "孟子仁政与屈原忠贞，同为战国精神。" } }
+  },
+  {
+    id: "quyuan", name: "屈原", birthYear: -340, deathYear: -278, dynasty: "战国",
+    class: "文人", classColor: "#1685A9",
+    quote: "路漫漫其修远兮，吾将上下而求索。", quoteSource: "《离骚》",
+    isKeyFigure: true,
+    relationships: { previous: { id: "mengzi", type: "其他", description: "孟子仁义与屈原忠贞，同为战国精神。" }, next: { id: "xunzi", type: "其他", description: "屈原以辞赋见志，荀子以礼法立说。" } }
+  },
+  {
+    id: "zhuangzi", name: "庄子", birthYear: -369, deathYear: -286, dynasty: "战国",
+    class: "文人", classColor: "#1685A9",
+    quote: "天地与我并生，而万物与我为一。", quoteSource: "《庄子》",
+    isKeyFigure: true,
+    relationships: { next: { id: "hanfeizi", type: "其他", description: "道家逍遥与法家严刑，思想两极。" } }
+  },
+  {
+    id: "xunzi", name: "荀子", birthYear: -313, deathYear: -238, dynasty: "战国",
+    class: "文人", classColor: "#1685A9",
+    quote: "青，取之于蓝，而青于蓝。", quoteSource: "《荀子》",
+    isKeyFigure: true,
+    relationships: { previous: { id: "quyuan", type: "其他", description: "屈原以辞赋见志，荀子以礼法立说。" }, next: { id: "hanfeizi", type: "师徒", description: "韩非、李斯皆出其门下，儒法由此分流。" } }
+  },
+  {
+    id: "hanfeizi", name: "韩非", birthYear: -280, deathYear: -233, dynasty: "战国",
+    class: "文人", classColor: "#1685A9",
+    quote: "法不阿贵，绳不挠曲。", quoteSource: "《韩非子》",
+    isKeyFigure: true,
+    relationships: { previous: { id: "xunzi", type: "师徒", description: "荀子弟子，集法家大成。" }, next: { id: "lisi", type: "同僚", description: "与李斯同窗荀子门下，后遭其忌。" } }
+  },
+  // ========== 秦（前221-前207） ==========
+  {
+    id: "lisi", name: "李斯", birthYear: -280, deathYear: -208, dynasty: "秦",
+    class: "帝王", classColor: "#8C4356",
+    quote: "泰山不让土壤，故能成其大。", quoteSource: "《谏逐客书》",
+    isKeyFigure: true,
+    relationships: { previous: { id: "hanfeizi", type: "同僚", description: "同窗荀子，助秦统一。" }, next: { id: "zhaogao", type: "对手", description: "沙丘之谋后为赵高所害。" } }
+  },
+  {
+    id: "zhaogao", name: "赵高", birthYear: -258, deathYear: -207, dynasty: "秦",
+    class: "帝王", classColor: "#8C4356",
+    quote: "指鹿为马。", quoteSource: "《史记》",
+    isKeyFigure: false,
+    relationships: { previous: { id: "lisi", type: "对手", description: "沙丘合谋，后反噬之。" }, next: { id: "zhangliang", type: "其他", description: "秦亡之后，张良辅汉开新朝。" } }
+  },
+  // ========== 西汉（前202-8） ==========
+  {
+    id: "zhangliang", name: "张良", birthYear: -250, deathYear: -186, dynasty: "西汉",
+    class: "帝王", classColor: "#8C4356",
+    quote: "运筹帷幄之中，决胜千里之外。", quoteSource: "《史记》",
+    isKeyFigure: true,
+    relationships: { previous: { id: "zhaogao", type: "其他", description: "秦亡之后，张良辅汉开新朝。" }, next: { id: "hanxin", type: "同僚", description: "与韩信并列为汉初开国功臣。" } }
+  },
+  {
+    id: "hanxin", name: "韩信", birthYear: -231, deathYear: -196, dynasty: "西汉",
+    class: "武将", classColor: "#000000",
+    quote: "多多益善。", quoteSource: "《史记》",
+    isKeyFigure: true,
+    relationships: { previous: { id: "zhangliang", type: "同僚", description: "与张良同为开国功臣。" }, next: { id: "weiqing", type: "其他", description: "韩信之后，卫青继为汉之名将。" } }
+  },
+  {
+    id: "weiqing", name: "卫青", birthYear: -156, deathYear: -106, dynasty: "西汉",
+    class: "武将", classColor: "#000000",
+    quote: "匈奴未灭，何以家为。", quoteSource: "《史记》",
+    isKeyFigure: true,
+    relationships: { previous: { id: "hanxin", type: "其他", description: "继韩信之后，汉之名将。" }, next: { id: "huoqubing", type: "家族", description: "霍去病为其外甥，舅侄并称。" } }
+  },
+  {
+    id: "huoqubing", name: "霍去病", birthYear: -140, deathYear: -117, dynasty: "西汉",
+    class: "武将", classColor: "#000000",
+    quote: "匈奴未灭，何以家为。", quoteSource: "《史记》",
+    isKeyFigure: true,
+    relationships: { previous: { id: "weiqing", type: "家族", description: "卫青之甥，英年早逝。" }, next: { id: "dongzhongshu", type: "其他", description: "武功之后，董仲舒以文治辅汉。" } }
+  },
+  {
+    id: "dongzhongshu", name: "董仲舒", birthYear: -179, deathYear: -104, dynasty: "西汉",
+    class: "文人", classColor: "#1685A9",
+    quote: "罢黜百家，独尊儒术。", quoteSource: "《天人三策》",
+    isKeyFigure: true,
+    relationships: { previous: { id: "huoqubing", type: "其他", description: "武功之后，文治辅汉。" }, next: { id: "simaqian", type: "其他", description: "儒术既尊，司马迁继之以史家绝笔。" } }
+  },
+  {
+    id: "simaqian", name: "司马迁", birthYear: -145, deathYear: -86, dynasty: "西汉",
+    class: "文人", classColor: "#1685A9",
+    quote: "人固有一死，或重于泰山，或轻于鸿毛。", quoteSource: "《报任安书》",
+    isKeyFigure: true,
+    relationships: { previous: { id: "dongzhongshu", type: "其他", description: "儒术既尊，司马迁继之以史。" }, next: { id: "simaxiangru", type: "其他", description: "史家绝笔与辞赋大家，并称西汉双璧。" } }
+  },
+  {
+    id: "simaxiangru", name: "司马相如", birthYear: -179, deathYear: -117, dynasty: "西汉",
+    class: "文人", classColor: "#1685A9",
+    quote: "凤兮凤兮归故乡，遨游四海求其凰。", quoteSource: "《凤求凰》",
+    isKeyFigure: false,
+    relationships: { previous: { id: "simaqian", type: "其他", description: "史家绝笔与辞赋大家，并称西汉双璧。" }, next: { id: "banggu", type: "其他", description: "西汉辞赋之后，东汉班固继之以史。" } }
+  },
+  // ========== 东汉（25-220） ==========
+  {
+    id: "banggu", name: "班固", birthYear: 32, deathYear: 92, dynasty: "东汉",
+    class: "文人", classColor: "#1685A9",
+    quote: "汉书之作，以继史记。", quoteSource: "《汉书》",
+    isKeyFigure: false,
+    relationships: { previous: { id: "simaxiangru", type: "其他", description: "西汉辞赋之后，东汉班固继之以史。" }, next: { id: "cailun", type: "其他", description: "班固修史，蔡伦造纸，文化并兴。" } }
+  },
+  {
+    id: "cailun", name: "蔡伦", birthYear: 63, deathYear: 121, dynasty: "东汉",
+    class: "工", classColor: "#CA6924",
+    quote: "用树肤、麻头及敝布、鱼网以为纸。", quoteSource: "《后汉书》",
+    isKeyFigure: true,
+    relationships: { previous: { id: "banggu", type: "其他", description: "班固修史，蔡伦造纸，文化并兴。" }, next: { id: "zhangheng", type: "其他", description: "造纸之后，张衡以科学名世。" } }
+  },
+  {
+    id: "zhangheng", name: "张衡", birthYear: 78, deathYear: 139, dynasty: "东汉",
+    class: "文人", classColor: "#1685A9",
+    quote: "浑天如鸡子，地如鸡中黄。", quoteSource: "《浑天仪注》",
+    isKeyFigure: true,
+    relationships: { previous: { id: "cailun", type: "其他", description: "造纸之后，张衡以科学名世。" }, next: { id: "huatuo", type: "其他", description: "科学之外，华佗以医术济世。" } }
+  },
+  {
+    id: "huatuo", name: "华佗", birthYear: 145, deathYear: 208, dynasty: "东汉",
+    class: "僧道", classColor: "#F0C239",
+    quote: "人体欲得劳动，但不当使极尔。", quoteSource: "《后汉书》",
+    isKeyFigure: true,
+    relationships: { previous: { id: "zhangheng", type: "其他", description: "科学之外，华佗以医术济世。" }, next: { id: "caiwenji", type: "其他", description: "汉末乱世，华佗行医，蔡文姬以才女名世。" } }
+  },
+  // ========== 三国（220-280）补充 ==========
+  {
+    id: "zhouyu", name: "周瑜", birthYear: 175, deathYear: 210, dynasty: "三国",
+    class: "武将", classColor: "#000000",
+    quote: "曲有误，周郎顾。", quoteSource: "《三国志》",
+    isKeyFigure: true,
+    relationships: { previous: { id: "huatuo", type: "其他", description: "汉末乱世，华佗行医，周瑜用兵。" }, next: { id: "luxun_sanguo", type: "其他", description: "周瑜之后，陆逊继为东吴名将。" } }
+  },
+  {
+    id: "luxun_sanguo", name: "陆逊", birthYear: 183, deathYear: 245, dynasty: "三国",
+    class: "武将", classColor: "#000000",
+    quote: "夷陵之战，火烧连营。", quoteSource: "《三国志》",
+    isKeyFigure: true,
+    relationships: { previous: { id: "zhouyu", type: "其他", description: "继周瑜之后，为东吴名将。" }, next: { id: "caiwenji", type: "其他", description: "三国武将之后，蔡文姬以才女名世。" } }
+  },
+  {
+    id: "caiwenji", name: "蔡文姬", birthYear: 177, deathYear: 249, dynasty: "三国",
+    class: "文人", classColor: "#1685A9",
+    quote: "汉季失权柄，董卓乱天常。", quoteSource: "《悲愤诗》",
+    isKeyFigure: false,
+    relationships: { previous: { id: "huatuo", type: "其他", description: "汉末乱世，华佗行医，文姬以才女名世。" }, next: { id: "duyu", type: "其他", description: "三国之后，两晋杜预文武兼资。" } }
+  },
+  // ========== 两晋（266-420） ==========
+  {
+    id: "duyu", name: "杜预", birthYear: 222, deathYear: 285, dynasty: "西晋",
+    class: "武将", classColor: "#000000",
+    quote: "春秋左氏经传集解。", quoteSource: "《左传》注",
+    isKeyFigure: false,
+    relationships: { previous: { id: "caiwenji", type: "其他", description: "三国之后，两晋杜预文武兼资。" }, next: { id: "xiean_jin", type: "其他", description: "杜预之后，东晋谢安继为名将。" } }
+  },
+  {
+    id: "xiean_jin", name: "谢安", birthYear: 320, deathYear: 385, dynasty: "东晋",
+    class: "帝王", classColor: "#8C4356",
+    quote: "小儿辈大破贼。", quoteSource: "《晋书》",
+    isKeyFigure: true,
+    relationships: { previous: { id: "duyu", type: "其他", description: "淝水之战，谢安以少胜多，继杜预文武之风。" }, next: { id: "zuchongzhi", type: "其他", description: "东晋之后，南朝祖冲之精于算术。" } }
+  },
+  // ========== 南北朝（420-589） ==========
+  {
+    id: "zuchongzhi", name: "祖冲之", birthYear: 429, deathYear: 500, dynasty: "南北朝",
+    class: "文人", classColor: "#1685A9",
+    quote: "圆周率介于3.1415926与3.1415927之间。", quoteSource: "《缀术》",
+    isKeyFigure: true,
+    relationships: { previous: { id: "xiean_jin", type: "其他", description: "东晋之后，南朝祖冲之精于算术。" }, next: { id: "lidaoyuan", type: "其他", description: "祖冲之算经，郦道元注水经，南北朝科学并兴。" } }
+  },
+  {
+    id: "taohongjing", name: "陶弘景", birthYear: 456, deathYear: 536, dynasty: "南北朝",
+    class: "僧道", classColor: "#F0C239",
+    quote: "山中宰相。", quoteSource: "《南史》",
+    isKeyFigure: false,
+    relationships: { previous: { id: "lidaoyuan", type: "其他", description: "南北朝科学、隐逸相继。" }, next: { id: "wangwei", type: "其他", description: "南北朝隐逸之后，唐代王维承山水之趣。" } }
+  },
+  // ========== 唐（618-907）补充 ==========
+  {
+    id: "fangxuanling", name: "房玄龄", birthYear: 579, deathYear: 648, dynasty: "唐",
+    class: "帝王", classColor: "#8C4356",
+    quote: "房谋杜断。", quoteSource: "《旧唐书》",
+    isKeyFigure: true,
+    relationships: { previous: { id: "taohongjing", type: "其他", description: "南北朝之后，唐初房玄龄开贞观之治。" }, next: { id: "weizheng", type: "同僚", description: "与魏徵同为贞观名臣。" } }
+  },
+  {
+    id: "weizheng", name: "魏徵", birthYear: 580, deathYear: 643, dynasty: "唐",
+    class: "帝王", classColor: "#8C4356",
+    quote: "以铜为镜，可以正衣冠；以古为镜，可以知兴替。", quoteSource: "《旧唐书》",
+    isKeyFigure: true,
+    relationships: { previous: { id: "fangxuanling", type: "同僚", description: "与房玄龄同为贞观名臣。" }, next: { id: "yanzhenqing", type: "其他", description: "贞观之后，颜真卿以忠义名世。" } }
+  },
+  {
+    id: "yanzhenqing", name: "颜真卿", birthYear: 709, deathYear: 785, dynasty: "唐",
+    class: "文人", classColor: "#1685A9",
+    quote: "祭侄文稿，天下第二行书。", quoteSource: "《祭侄文稿》",
+    isKeyFigure: true,
+    relationships: { previous: { id: "weizheng", type: "其他", description: "贞观之后，颜真卿以忠义名世。" }, next: { id: "liuzongyuan", type: "其他", description: "颜真卿之后，柳宗元、刘禹锡继起。" } }
+  },
+  {
+    id: "liuzongyuan", name: "柳宗元", birthYear: 773, deathYear: 819, dynasty: "唐",
+    class: "文人", classColor: "#1685A9",
+    quote: "千山鸟飞绝，万径人踪灭。", quoteSource: "《江雪》",
+    isKeyFigure: true,
+    relationships: { previous: { id: "yanzhenqing", type: "其他", description: "颜真卿之后，柳宗元继起。" }, next: { id: "huangchao", type: "其他", description: "中唐之后，黄巢起义，唐祚将终。" } }
+  },
+  {
+    id: "huangchao", name: "黄巢", birthYear: 835, deathYear: 884, dynasty: "唐",
+    class: "武将", classColor: "#000000",
+    quote: "冲天香阵透长安，满城尽带黄金甲。", quoteSource: "《不第后赋菊》",
+    isKeyFigure: true,
+    relationships: { previous: { id: "liuzongyuan", type: "其他", description: "中唐之后，黄巢起义。" }, next: { id: "liyu", type: "其他", description: "唐亡之后，五代李煜以词名世。" } }
+  },
+  // ========== 五代十国（907-979） ==========
+  {
+    id: "liyu", name: "李煜", birthYear: 937, deathYear: 978, dynasty: "五代十国",
+    class: "帝王", classColor: "#8C4356",
+    quote: "问君能有几多愁？恰似一江春水向东流。", quoteSource: "《虞美人》",
+    isKeyFigure: true,
+    relationships: { previous: { id: "huangchao", type: "其他", description: "唐末黄巢之后，五代李煜以词名世。" }, next: { id: "ouyangxiu", type: "其他", description: "五代之后，北宋欧阳修开古文新风。" } }
+  },
+  // ========== 北宋（960-1127）补充 ==========
+  {
+    id: "ouyangxiu", name: "欧阳修", birthYear: 1007, deathYear: 1072, dynasty: "北宋",
+    class: "文人", classColor: "#1685A9",
+    quote: "醉翁之意不在酒，在乎山水之间也。", quoteSource: "《醉翁亭记》",
+    isKeyFigure: true,
+    relationships: { previous: { id: "liyu", type: "其他", description: "五代之后，北宋欧阳修开古文新风。" }, next: { id: "fanzhongyan", type: "同僚", description: "与范仲淹、包拯同为北宋名臣。" } }
+  },
+  {
+    id: "fanzhongyan", name: "范仲淹", birthYear: 989, deathYear: 1052, dynasty: "北宋",
+    class: "帝王", classColor: "#8C4356",
+    quote: "先天下之忧而忧，后天下之乐而乐。", quoteSource: "《岳阳楼记》",
+    isKeyFigure: true,
+    relationships: { previous: { id: "ouyangxiu", type: "同僚", description: "与欧阳修同为北宋名臣。" }, next: { id: "baogong", type: "同僚", description: "与包拯、沈括同朝。" } }
+  },
+  {
+    id: "baogong", name: "包拯", birthYear: 999, deathYear: 1062, dynasty: "北宋",
+    class: "帝王", classColor: "#8C4356",
+    quote: "清心为治本，直道是身谋。", quoteSource: "《书端州郡斋壁》",
+    isKeyFigure: true,
+    relationships: { previous: { id: "fanzhongyan", type: "同僚", description: "与范仲淹同朝。" }, next: { id: "shenkuo", type: "其他", description: "包拯之后，沈括以科学名世。" } }
+  },
+  {
+    id: "shenkuo", name: "沈括", birthYear: 1031, deathYear: 1095, dynasty: "北宋",
+    class: "文人", classColor: "#1685A9",
+    quote: "梦溪笔谈，集科学之大成。", quoteSource: "《梦溪笔谈》",
+    isKeyFigure: true,
+    relationships: { previous: { id: "baogong", type: "其他", description: "包拯之后，沈括以科学名世。" }, next: { id: "luyou", type: "其他", description: "北宋之后，南宋陆游以诗名世。" } }
+  },
+  // ========== 南宋（1127-1279） ==========
+  {
+    id: "luyou", name: "陆游", birthYear: 1125, deathYear: 1210, dynasty: "南宋",
+    class: "文人", classColor: "#1685A9",
+    quote: "王师北定中原日，家祭无忘告乃翁。", quoteSource: "《示儿》",
+    isKeyFigure: true,
+    relationships: { previous: { id: "shenkuo", type: "其他", description: "北宋之后，南宋陆游以诗名世。" }, next: { id: "yuefei", type: "其他", description: "陆游之诗与岳飞之志，同为南宋精神。" } }
+  },
+  {
+    id: "yuefei", name: "岳飞", birthYear: 1103, deathYear: 1142, dynasty: "南宋",
+    class: "武将", classColor: "#000000",
+    quote: "怒发冲冠，凭栏处、潇潇雨歇。", quoteSource: "《满江红》",
+    isKeyFigure: true,
+    relationships: { previous: { id: "luyou", type: "其他", description: "陆游之诗与岳飞之志，同为南宋精神。" }, next: { id: "liubofu", type: "其他", description: "岳飞之后，陆秀夫继为南宋忠臣。" } }
+  },
+  {
+    id: "liubofu", name: "陆秀夫", birthYear: 1236, deathYear: 1279, dynasty: "南宋",
+    class: "帝王", classColor: "#8C4356",
+    quote: "背帝投海，与国俱亡。", quoteSource: "《宋史》",
+    isKeyFigure: false,
+    relationships: { previous: { id: "yuefei", type: "其他", description: "岳飞之后，陆秀夫继为南宋忠臣。" }, next: { id: "liubofu_end", type: "其他", description: "南宋之后，明代刘伯温开基。" } }
+  },
+  // ========== 明（1368-1644）补充 ==========
+  {
+    id: "liubofu_end", name: "刘伯温", birthYear: 1311, deathYear: 1375, dynasty: "明",
+    class: "帝王", classColor: "#8C4356",
+    quote: "前知五百年，后知五百年。", quoteSource: "《烧饼歌》",
+    isKeyFigure: true,
+    relationships: { previous: { id: "liubofu", type: "其他", description: "南宋陆秀夫之后，明代刘伯温开基。" }, next: { id: "yuqian", type: "其他", description: "刘伯温之后，于谦继为明代名臣。" } }
+  },
+  {
+    id: "yuqian", name: "于谦", birthYear: 1398, deathYear: 1457, dynasty: "明",
+    class: "帝王", classColor: "#8C4356",
+    quote: "粉骨碎身浑不怕，要留清白在人间。", quoteSource: "《石灰吟》",
+    isKeyFigure: true,
+    relationships: { previous: { id: "liubofu_end", type: "其他", description: "刘伯温之后，于谦继为明代名臣。" }, next: { id: "hairui", type: "其他", description: "于谦之后，海瑞继为明代清官。" } }
+  },
+  {
+    id: "hairui", name: "海瑞", birthYear: 1514, deathYear: 1587, dynasty: "明",
+    class: "帝王", classColor: "#8C4356",
+    quote: "直言敢谏，刚锋济物。", quoteSource: "《治安疏》",
+    isKeyFigure: true,
+    relationships: { previous: { id: "yuqian", type: "其他", description: "于谦之后，海瑞继为明代清官。" }, next: { id: "zhenghe", type: "其他", description: "海瑞之后，郑和、徐光启继起。" } }
+  },
+  {
+    id: "zhenghe", name: "郑和", birthYear: 1371, deathYear: 1433, dynasty: "明",
+    class: "武将", classColor: "#000000",
+    quote: "七下西洋，宣德海外。", quoteSource: "《明史》",
+    isKeyFigure: true,
+    relationships: { previous: { id: "hairui", type: "其他", description: "明代名臣相继。" }, next: { id: "linzexu", type: "其他", description: "明代之后，清末林则徐开眼看世界。" } }
+  },
+  // ========== 清（1636-1912） ==========
+  {
+    id: "linzexu", name: "林则徐", birthYear: 1785, deathYear: 1850, dynasty: "清",
+    class: "帝王", classColor: "#8C4356",
+    quote: "苟利国家生死以，岂因祸福避趋之。", quoteSource: "《赴戍登程口占示家人》",
+    isKeyFigure: true,
+    relationships: { previous: { id: "zhenghe", type: "其他", description: "明代之后，清末林则徐开眼看世界。" }, next: { id: "zuozongtang", type: "同僚", description: "与左宗棠、曾国藩同为晚清名臣。" } }
+  },
+  {
+    id: "zuozongtang", name: "左宗棠", birthYear: 1812, deathYear: 1885, dynasty: "清",
+    class: "武将", classColor: "#000000",
+    quote: "身无半亩，心忧天下。", quoteSource: "《左文襄公全集》",
+    isKeyFigure: true,
+    relationships: { previous: { id: "linzexu", type: "同僚", description: "与林则徐、曾国藩同为晚清名臣。" }, next: { id: "tansitong", type: "其他", description: "左宗棠之后，谭嗣同以维新名世。" } }
+  },
+  {
+    id: "tansitong", name: "谭嗣同", birthYear: 1865, deathYear: 1898, dynasty: "清",
+    class: "文人", classColor: "#1685A9",
+    quote: "我自横刀向天笑，去留肝胆两昆仑。", quoteSource: "《狱中题壁》",
+    isKeyFigure: true,
+    relationships: { previous: { id: "zuozongtang", type: "其他", description: "左宗棠之后，谭嗣同以维新名世。" }, next: { id: "huangxing", type: "其他", description: "戊戌之后，黄兴继以革命。" } }
+  },
+  // ========== 民国（1912-1949） ==========
+  {
+    id: "huangxing", name: "黄兴", birthYear: 1874, deathYear: 1916, dynasty: "民国",
+    class: "帝王", classColor: "#8C4356",
+    quote: "革命不怕死，怕死不革命。", quoteSource: "《黄兴集》",
+    isKeyFigure: true,
+    relationships: { previous: { id: "tansitong", type: "其他", description: "戊戌之后，黄兴继以革命。" }, next: { id: "caiYuanpei", type: "其他", description: "革命之后，蔡元培以教育救国。" } }
+  },
+  {
+    id: "caiYuanpei", name: "蔡元培", birthYear: 1868, deathYear: 1940, dynasty: "民国",
+    class: "文人", classColor: "#1685A9",
+    quote: "思想自由，兼容并包。", quoteSource: "《北京大学开学之演说》",
+    isKeyFigure: true,
+    relationships: { previous: { id: "huangxing", type: "其他", description: "革命之后，蔡元培以教育救国。" } }
   }
 ];
 

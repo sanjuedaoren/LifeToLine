@@ -1066,7 +1066,7 @@ const dynastyColors = {
 const classColors = {
   "帝王": "#8C4356",  // 绛紫
   "文人": "#1685A9",  // 石青
-  "武将": "#065279",  // 靛蓝
+  "武将": "#000000",  // 黑
   "士":   "#FF4C00",  // 朱红
   "僧道": "#F0C239",  // 缃色
   "农":   "#789262",  // 竹青
@@ -1171,6 +1171,16 @@ function yearToX(year, minYear, maxYear, width) { return ((year - minYear) / (ma
 function getTotalWidth() { return BASE_WIDTH; }
 function getColor(person) { return classColors[person.class] || person.classColor || '#75878A'; }
 
+// ===== 年份格式化 =====
+function formatYear(y) {
+  if (y < 0) return `公元前${Math.abs(y)}年`;
+  if (y > 0) return `${y}年`;
+  return '公元1年';
+}
+function formatYearRange(start, end) {
+  return `${formatYear(start)}—${formatYear(end)}`;
+}
+
 // ===== Dynasty Detection =====
 function detectDynasty(birthYear, deathYear) {
   const midYear = Math.round((birthYear + deathYear) / 2);
@@ -1191,23 +1201,16 @@ function detectDynasty(birthYear, deathYear) {
 // ===== Render Legends =====
 function renderLegends() {
   classLegend.innerHTML = '';
-  // Collect used classes
-  const usedClasses = new Set(hisData.map(p => p.class));
+  // 显示所有职业（不再过滤只展示当前数据中用到的）
   Object.entries(classColors).forEach(([name, color]) => {
-    if (!usedClasses.has(name)) return;
     const item = document.createElement('div');
     item.className = 'legend-item';
     item.innerHTML = `<span class="legend-dot" style="background:${color}"></span><span class="legend-label">${name}</span>`;
     classLegend.appendChild(item);
   });
   relationLegend.innerHTML = '';
-  const usedRelTypes = new Set();
-  hisData.forEach(p => {
-    if (p.relationships?.previous) usedRelTypes.add(p.relationships.previous.type);
-    if (p.relationships?.next) usedRelTypes.add(p.relationships.next.type);
-  });
+  // 显示所有关系类型（不再过滤只展示当前数据中用到的）
   Object.entries(relationshipStyles).forEach(([name, style]) => {
-    if (!usedRelTypes.has(name)) return;
     const item = document.createElement('div');
     item.className = 'legend-item';
     item.innerHTML = `<span class="legend-line" style="background:${style.color}"></span><span class="legend-label">${name}</span>`;
@@ -1310,7 +1313,7 @@ function renderDynastyBar(totalWidth, timelineMin, timelineMax) {
     item.appendChild(nameEl);
     const yearEl = document.createElement('div');
     yearEl.className = 'dynasty-bar-year';
-    yearEl.textContent = `${d.start}—${d.displayEnd || d.end}`;
+    yearEl.textContent = formatYearRange(d.start, d.displayEnd || d.end);
     item.appendChild(yearEl);
     dynastyBar.appendChild(item);
   });
@@ -1370,11 +1373,10 @@ function renderTimeline(hisIds) {
   nodesContainer.innerHTML = '';
   renderDynastyBackgrounds(totalWidth, timelineMin, timelineMax);
   renderDynastyBar(totalWidth, timelineMin, timelineMax);
-  // 节点定位复用与背景完全相同的「加宽后」段几何，保证人物不会超出自己的朝代
+  // 节点定位复用与背景完全相同的「加宽后」段几何，用于拖动边界计算
   const _segments = computeDynastySegments(totalWidth, timelineMin, timelineMax);
   const segByName = {};
   _segments.forEach(sg => { segByName[sg.d.name] = { left: sg.left, right: sg.left + sg.width }; });
-  const boundsFor = (name) => segByName[name] || getDynastyBounds(name, totalWidth, timelineMin, timelineMax);
   // 拖动范围：覆盖人物生卒年跨越的所有朝代的并集带（相邻朝代连续，并集即最左到最右）
   const dragBoundsFor = (p) => {
     let left = Infinity, right = -Infinity;
@@ -1384,36 +1386,43 @@ function renderTimeline(hisIds) {
         if (b) { left = Math.min(left, b.left); right = Math.max(right, b.right); }
       }
     });
-    if (left === Infinity) { const b = boundsFor(p.dynasty); return { left: b.left, right: b.right }; }
+    if (left === Infinity) {
+      const b = segByName[p.dynasty];
+      if (b) return { left: b.left, right: b.right };
+      return { left: 0, right: totalWidth };
+    }
     return { left, right };
   };
-  const dynastyGroups = {};
-  persons.forEach(p => {
-    if (!dynastyGroups[p.dynasty]) dynastyGroups[p.dynasty] = [];
-    dynastyGroups[p.dynasty].push(p);
-  });
-  Object.values(dynastyGroups).forEach(group => group.sort((a, b) => a.birthYear - b.birthYear));
   const positions = {};
   const NODE_RADIUS = 15;
   const usableTop = contentHeight * 0.1 + 16;
   const usableBottom = contentHeight - 24;
   // 节点区域实际底部（含半径与一点内边距），作为垂直拖动上限基准
   verticalContentBase = usableBottom + NODE_RADIUS + 10;
-  const colGap = NODE_RADIUS * 3.5;
-  const rowGap = NODE_RADIUS * 3.2;
-  Object.entries(dynastyGroups).forEach(([dynastyName, group]) => {
-    const bounds = boundsFor(dynastyName);
-    const segWidth = bounds.right - bounds.left;
-    const padX = Math.max(NODE_RADIUS + 2, 6);
-    const availW = Math.max(0, segWidth - padX * 2);
-    const availH = usableBottom - usableTop;
-    // Grid layout: top-to-bottom, left-to-right
-    const startY = usableTop + NODE_RADIUS + 4;
+  // 初始位置规则：
+  //   水平 x：由出生年份决定（左→右 = 早→晚）
+  //   垂直 y：由职业等级决定（帝王最上 → 文人 → 武将 → 僧道最下）
+  //         同职业内按出生年顺序在职业带内垂直分布（避免重叠）
+  const CLASS_RANK = { "帝王": 0, "文人": 1, "武将": 2, "僧道": 3, "士": 4, "农": 5, "工": 6, "商": 7 };
+  const rankList = [...new Set(persons.map(p => CLASS_RANK[p.class] ?? 99))].sort((a, b) => a - b);
+  const numBands = rankList.length;
+  const bandH = (usableBottom - usableTop) / Math.max(1, numBands);
+  // 按职业分组，组内按出生年排序
+  const byClass = {};
+  persons.forEach(p => {
+    const r = CLASS_RANK[p.class] ?? 99;
+    if (!byClass[r]) byClass[r] = [];
+    byClass[r].push(p);
+  });
+  Object.values(byClass).forEach(g => g.sort((a, b) => a.birthYear - b.birthYear));
+  rankList.forEach((rank, bandIdx) => {
+    const group = byClass[rank] || [];
+    const bandTop = usableTop + bandIdx * bandH;
+    const m = group.length;
     group.forEach((p, i) => {
-      const col = Math.floor(i * rowGap / availH) || 0;
-      const row = i - col * Math.floor(availH / rowGap);
-      const x = Math.min(bounds.right - NODE_RADIUS, bounds.left + padX + col * colGap);
-      const y = Math.min(usableBottom - NODE_RADIUS, startY + row * rowGap);
+      const x = yearToX(p.birthYear, timelineMin, timelineMax, totalWidth);
+      // 同职业内按出生年顺序在职业带内垂直分布，避免重叠
+      const y = m > 1 ? bandTop + (i + 0.5) * (bandH / m) : bandTop + bandH / 2;
       positions[p.id] = { x, y };
     });
   });
@@ -1428,8 +1437,8 @@ function renderTimeline(hisIds) {
   extraIds.forEach(id => {
     const ep = getPersonById(id);
     if (!ep) return;
-    const bounds = boundsFor(ep.dynasty);
-    const cx = (bounds.left + bounds.right) / 2;
+    const db = dragBoundsFor(ep);
+    const cx = (db.left + db.right) / 2;
     const cy = (usableTop + usableBottom) / 2;
     positions[ep.id] = { x: cx, y: cy };
   });
@@ -1746,7 +1755,7 @@ zoomOutBtn.addEventListener('click', () => {
 // ===== Detail Card =====
 function openDetail(person) {
   detailTitle.textContent = person.name;
-  detailSubtitle.textContent = `${person.dynasty} · ${person.class} · ${person.birthYear}-${person.deathYear}年`;
+  detailSubtitle.textContent = `${person.dynasty} · ${person.class} · ${formatYearRange(person.birthYear, person.deathYear)}`;
   let html = `<div class="detail-quote-box"><div class="detail-quote-text">「${person.quote}」</div><div class="detail-quote-source">—— ${person.quoteSource}</div></div>`;
   if (person.relationships?.previous) {
     const prev = getPersonById(person.relationships.previous.id);
@@ -1831,7 +1840,7 @@ searchPersonInput.addEventListener('input', () => {
   matches.forEach(p => {
     const item = document.createElement('div');
     item.className = 'autocomplete-item';
-    item.textContent = `${p.name} (${p.dynasty} · ${p.birthYear}-${p.deathYear})`;
+    item.textContent = `${p.name} (${p.dynasty} · ${formatYear(p.birthYear)}–${formatYear(p.deathYear)})`;
     item.addEventListener('click', () => {
       searchPersonInput.value = p.name;
       searchAutocompleteList.style.display = 'none';
@@ -1952,7 +1961,7 @@ function populateRelationSelect() {
   sorted.forEach(p => {
     const opt = document.createElement('option');
     opt.value = p.id;
-    opt.textContent = `${p.name}（${p.dynasty} · ${p.birthYear}-${p.deathYear}）`;
+    opt.textContent = `${p.name}（${p.dynasty} · ${formatYear(p.birthYear)}–${formatYear(p.deathYear)}）`;
     customRelationSelect.appendChild(opt);
   });
 }
