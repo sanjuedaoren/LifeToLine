@@ -1,6 +1,0 @@
-{
-  "name": "History Chain (链史)",
-  "description": "中国历代人物关系演进时空长廊 - 从诸葛亮到鲁迅的历史人物脉络可视化",
-  "requestFramePermissions": [],
-  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
-}
