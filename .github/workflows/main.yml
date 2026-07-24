@@ -1,0 +1,9 @@
+name: Generate GoDoc HTML files
+  # You may pin to the exact commit or the version.
+  # uses: rts-core/godoc-action@016b5807ddaa463eb83d5a22c10cc5587c8a1cae
+  uses: rts-core/godoc-action@v1.0.0
+  with:
+    # Set a directory to be used for generating HTML files into
+    html_dir: # optional, default is .docs
+    # Flag for whether .go files are included. Greatly increases size and build time, and does not work with most hosting. Recommended flagged true.
+    ignore_src: # optional, default is true
